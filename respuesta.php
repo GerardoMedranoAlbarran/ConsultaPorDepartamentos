@@ -1,16 +1,17 @@
 
  <?php
 
- 	$host = 'localhost';
+ 	  $host = 'localhost';
    	$user = 'root';
    	$pass = '';
    	$dbname = 'employees';
    	//$conn = mysql_connect($host, $user, $pass);
  	
-	$conexion = mysqli_connect( $host, $user,$pass);
-	$db = mysqli_select_db($conexion,$dbname);
-	$get = $_GET['Department'];
-  	
+  	$conexion = mysqli_connect( $host, $user,$pass);
+  	$db = mysqli_select_db($conexion,$dbname);
+  	$getDept = $_GET['Department'];
+    $getTam = $_GET['tam'];
+     	
   	$query = "SELECT 
               employees.emp_no AS Id_empleado,
               CONCAT(first_name,' ',last_name) AS FULLNAME,
@@ -22,10 +23,9 @@
               JOIN salaries ON employees.emp_no=salaries.emp_no
               WHERE salaries.to_date>=CURDATE() 
               AND titleS.to_date > CURDATE()
-              AND dept_no = '$get' 
-              LIMIT 10;";
-
-
+              AND dept_no = '$getDept' 
+              LIMIT $getTam;";
+    //$query = "SELECT *  FROM employees;";
 
    	$result = mysqli_query($conexion,$query);
   	$flag_once = true;
@@ -49,11 +49,4 @@
    		echo "</tr>";	
    	}
     echo "</table>";
-
-   	
-
-
-   
-
-
 ?>
